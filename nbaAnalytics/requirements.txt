@@ -1,0 +1,14 @@
+nba_api
+prefect
+pandas
+numpy
+sqlalchemy
+asyncpg
+xgboost
+mlflow
+fastapi
+uvicorn
+streamlit
+plotly
+python-dotenv
+psycopg2-binary
