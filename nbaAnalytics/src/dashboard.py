@@ -1,36 +1,105 @@
-import streamlit as st
+import os
+
 import pandas as pd
-import plotly.express as px
-import requests
+import streamlit as st
+from sqlalchemy import create_engine
 
-st.set_page_config(page_title="NBA AI Analytics", layout="wide")
 
-st.title("🏀 NBA Real-Time Analytics Dashboard")
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://admin:password123@localhost:5432/nba_db",
+)
 
-# Sidebar - Controls
-st.sidebar.header("Game Selection")
-game_id = st.sidebar.text_input("Enter Game ID", "0022300001")
+st.set_page_config(page_title="NBA Warehouse Overview", layout="wide")
+engine = create_engine(DATABASE_URL)
 
-# Main Content - Two Columns
-col1, col2 = st.columns([2, 1])
+st.title("NBA Warehouse Overview")
 
-with col1:
-    st.subheader("Live Win Probability")
-    # Simulate fetching data from your API/DB
-    chart_data = pd.DataFrame({
-        'Time': range(100),
-        'Prob': [0.5 + (i * 0.004) for i in range(100)]
-    })
-    fig = px.line(chart_data, x='Time', y='Prob', range_y=[0, 1])
-    st.plotly_chart(fig, use_container_width=True)
+try:
+    metrics = pd.read_sql(
+        """
+        SELECT
+            COUNT(DISTINCT g.game_id) AS games,
+            COUNT(p.play_id) AS plays,
+            COUNT(mp.play_id) AS predictions,
+            MAX(p.updated_at) AS latest_play_update
+        FROM games g
+        LEFT JOIN play_by_play p ON p.game_id = g.game_id
+        LEFT JOIN model_predictions mp
+            ON mp.game_id = p.game_id
+           AND mp.play_id = p.play_id
+        """,
+        engine,
+    ).iloc[0]
 
-with col2:
-    st.subheader("AI Performance Insights")
-    st.metric(label="Current Win Prob", value="74%", delta="+2.3%")
-    st.write("**XGBoost Forecast:** Home team expected to win by 4.5 pts.")
-    
-    # Table of recent events
-    st.dataframe(pd.DataFrame({
-        'Event': ['3pt Shot', 'Foul', 'Substitution'],
-        'Impact': ['+4.2%', '-1.1%', '+0.5%']
-    }))
+    run_history = pd.read_sql(
+        """
+        SELECT
+            started_at,
+            finished_at,
+            source,
+            requested_events,
+            successful_events,
+            total_plays,
+            status,
+            error
+        FROM ingest_runs
+        ORDER BY started_at DESC
+        LIMIT 20
+        """,
+        engine,
+    )
+
+    games_by_date = pd.read_sql(
+        """
+        SELECT
+            DATE(game_date) AS game_day,
+            COUNT(*) AS games
+        FROM games
+        GROUP BY DATE(game_date)
+        ORDER BY game_day
+        """,
+        engine,
+    )
+
+    training_runs = pd.read_sql(
+        """
+        SELECT
+            created_at,
+            train_games,
+            test_games,
+            train_rows,
+            test_rows,
+            brier_score,
+            log_loss,
+            roc_auc,
+            calibration_accuracy,
+            model_path
+        FROM model_training_runs
+        ORDER BY created_at DESC
+        LIMIT 10
+        """,
+        engine,
+    )
+
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Games", int(metrics["games"] or 0))
+    col2.metric("Plays", int(metrics["plays"] or 0))
+    col3.metric("Predictions", int(metrics["predictions"] or 0))
+    col4.metric("Latest Update", str(metrics["latest_play_update"] or "none"))
+
+    st.subheader("Games by Date")
+    if games_by_date.empty:
+        st.info("No ingested games yet.")
+    else:
+        st.bar_chart(games_by_date.set_index("game_day"))
+
+    st.subheader("Ingest Runs")
+    st.dataframe(run_history, width="stretch", hide_index=True)
+
+    st.subheader("Model Training Runs")
+    st.dataframe(training_runs, width="stretch", hide_index=True)
+
+except Exception as exc:
+    st.error(f"Could not load warehouse overview. Error: {exc}")
+    st.info("Start Postgres, then run the ETL script or Prefect flow.")

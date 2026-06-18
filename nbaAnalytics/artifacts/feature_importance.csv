@@ -1,0 +1,13 @@
+feature,importance
+is_home_leading,0.38196728
+score_margin_per_minute,0.28666788
+score_margin,0.10413137
+abs_score_margin,0.046240423
+seconds_remaining,0.037386462
+total_score,0.033521302
+home_score,0.032072753
+period,0.0314128
+away_score,0.030054873
+is_late_game,0.014286691
+is_scoring_play,0.0022581762
+is_tied,0.0

@@ -1,10 +1,12 @@
 nba_api
 prefect
 pandas
-numpy
+numpy>=1.26.4
+scipy>=1.14
+scikit-learn>=1.7
 sqlalchemy
 asyncpg
-xgboost
+xgboost>=3.0
 mlflow
 fastapi
 uvicorn
@@ -12,3 +14,4 @@ streamlit
 plotly
 python-dotenv
 psycopg2-binary
+joblib
