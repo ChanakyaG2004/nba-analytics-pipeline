@@ -37,7 +37,12 @@ Disclaimer: Not every play is scored because the model requires score/time field
 - Team level game and performance analysis
 - Win probability predictions using ML
 - ETL pipeline for extracting, cleaning, and loading data
-- 
+- PostgreSQL data warehouse for structured storage
+- Feature engineering using pandas and NumPy
+- XGBoost model for probability prediction
+- Streamlit frontend to visualize dashboard
+- Docker for local development setup
+- Public deployment through Hugging Face
 
 ## Core Stack
 - Python for ETL (Extract, Transform, Lead), modeling, API, and dashboard Logic
