@@ -1,8 +1,8 @@
 {
-  "train_rows": 64337,
-  "test_rows": 15815,
-  "train_games": 152,
-  "test_games": 37,
+  "train_rows": 893785,
+  "test_rows": 223158,
+  "train_games": 2104,
+  "test_games": 527,
   "features": [
     "period",
     "seconds_remaining",
@@ -17,8 +17,8 @@
     "is_late_game",
     "is_scoring_play"
   ],
-  "brier_score": 0.20342928171157837,
-  "log_loss": 0.5827946662902832,
-  "roc_auc": 0.7190758147719191,
-  "calibration_accuracy": 0.9384165911662911
+  "brier_score": 0.16415701806545258,
+  "log_loss": 0.4891260862350464,
+  "roc_auc": 0.8383575725318555,
+  "calibration_accuracy": 0.9805418159845241
 }

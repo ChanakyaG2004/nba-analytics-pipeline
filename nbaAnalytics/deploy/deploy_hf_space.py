@@ -27,6 +27,7 @@ def deploy(args):
         folder_path=space_dir,
         path_in_repo=".",
         commit_message="Deploy NBA analytics dashboard",
+        delete_patterns=["__pycache__/*", "*.pyc"],
     )
     return repo_id
 
