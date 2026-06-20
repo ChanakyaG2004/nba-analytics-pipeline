@@ -1,10 +1,10 @@
-# NBA Analytics for 2025 - 2026 season
+# NBA Analytics for 2025-2026 season
 
 ## Live website
   https://chanakyag-nba-ai-analytics-dashboard.hf.space
 
 ## Inspiration
-As someone who enjoys sports betting, I wanted to make an application that could use probability and AI to see which teams have the higher win probability. (I have stopped sports betting but this was still fun to make)
+As someone who enjoys sports betting, I wanted to build an application that uses probability and AI to estimate which teams have a higher win probability. (I have stopped sports betting, but this was still a fun project to build)
 
 ## Very simple high level overview
 
@@ -13,7 +13,7 @@ ESPN Data
     ↓
 Python ETL Pipeline
     ↓
-PostgreSQL ETL Pipeline
+PostgreSQL Database
     ↓
 Feature Engineering
     ↓
@@ -59,7 +59,7 @@ Disclaimer: Not every play is scored because the model requires score/time field
 
 ## Machine Learning Model
 
-I used the XGBoost model to estimate win probability based on engineered basketball features. The model is trained on historical game and play level data, then evaluated using scikit learn metrics. The model outputs a probability estimate rather than just a win/loss prediction, making it more useful for understanding confidence and game context.
+I used an XGBoost model to estimate win probability based on engineered basketball features. The model is trained on historical game and play level data, then evaluated using scikit learn metrics. This model outputs a probability estimate rather than just a win/loss prediction, making it more useful for understanding confidence and game context.
 
 ## API
 
@@ -67,7 +67,7 @@ I used FastAPI to serve model predictions. The API acts as the connection betwee
 
 ## Dashboard
 
-The Streamlit dashboard provides a seimple interface for exploring NBA data and viewing model predictions. It is designed to make the machine learning results understandable through charts, tables, and probability outputs.
+The Streamlit dashboard provides a simple interface for exploring NBA data and viewing model predictions. It is designed to make the machine learning results understandable through charts, tables, and probability outputs.
 
 ## Running Locally
 
@@ -83,11 +83,11 @@ Install dependencies:
 
 pip install -r requirements.txt
 
-Start local services with docker compose:
+Start local services with Docker Compose:
 
 docker compose up
 
-Run streamlit and then the FastAPI server
+Run Streamlit and then the FastAPI server
 
 streamlit run app.py
 uvicorn main:app --reload
