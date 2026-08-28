@@ -1,4 +1,4 @@
 pandas>=2.2
 streamlit>=1.52
-xgboost>=3.0
+xgboost-cpu>=3.0
 scikit-learn>=1.7

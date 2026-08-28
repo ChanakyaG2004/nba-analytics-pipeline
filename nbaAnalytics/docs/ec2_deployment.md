@@ -1,5 +1,20 @@
 # EC2 Deployment Runbook
 
+## Public portfolio dashboard
+
+The recommended public deployment serves the self-contained CourtVision app on port 80. It does not require the PostgreSQL warehouse or API to remain online:
+
+```bash
+cd nbaAnalytics
+AWS_REGION=us-east-1 ./deploy/deploy_public_ec2.sh
+```
+
+This creates or reuses one Graviton `t4g.small` instance, exposes HTTP publicly, restricts SSH to your current IP, deploys `hf_space`, and verifies Streamlit's health endpoint. Re-running the command updates the existing instance.
+
+The deploying IAM principal needs EC2 provisioning access and permission to read the Canonical Ubuntu AMI from SSM. A ready-to-attach policy is provided at `deploy/ec2_deployer_policy.json`.
+
+AWS resources incur charges while the instance is running. For a production domain and HTTPS, put an Application Load Balancer or CloudFront in front of the instance and attach an ACM certificate.
+
 This runbook deploys the trained FastAPI inference service and Streamlit dashboard to a single AWS EC2 host with Docker Compose.
 
 Creating an EC2 instance can incur AWS charges. Terminate the instance when the demo is done.

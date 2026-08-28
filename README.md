@@ -1,7 +1,10 @@
 # NBA Analytics for 2025-2026 season
 
 ## Live website
-  https://chanakyag-nba-ai-analytics-dashboard.hf.space
+  http://44.193.213.198
+
+Deployed on AWS EC2. The previous Hugging Face Spaces deployment remains available at
+https://chanakyag-nba-ai-analytics-dashboard.hf.space.
 
 ## Inspiration
 As someone who enjoys sports betting, I wanted to build an application that uses probability and AI to estimate which teams have a higher win probability. (I have stopped sports betting, but this was still a fun project to build)
