@@ -1,7 +1,7 @@
 # NBA Analytics for 2025-2026 season
 
 ## Live website
-  http://44.193.213.198
+  http://nbaanalytics-44-193-213-198.nip.io
 
 Deployed on AWS EC2. The previous Hugging Face Spaces deployment remains available at
 https://chanakyag-nba-ai-analytics-dashboard.hf.space.

@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).parent
 DATA_DIR = BASE_DIR / "data"
 FEATURE_COLUMNS = ["period", "seconds_remaining", "home_score", "away_score", "score_margin", "abs_score_margin", "total_score", "score_margin_per_minute", "is_home_leading", "is_tied", "is_late_game", "is_scoring_play"]
 
-st.set_page_config(page_title="NBA CourtVision", page_icon="🏀", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="NBA CourtVision", layout="wide", initial_sidebar_state="expanded")
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
